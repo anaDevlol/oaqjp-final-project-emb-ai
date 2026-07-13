@@ -2,6 +2,7 @@ import requests
 import json
 
 def emotion_detector(text_to_analyze):
+
     URL = "https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
 
     Headers = {
@@ -15,6 +16,16 @@ def emotion_detector(text_to_analyze):
     }
 
     response = requests.post(URL, headers=Headers, json=Input_json)
+
+    if response.status_code == 400:
+        return {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+        }
 
     response_data = json.loads(response.text)
 
